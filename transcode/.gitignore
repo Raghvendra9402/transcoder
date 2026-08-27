@@ -6,6 +6,8 @@ out
 dist
 *.tgz
 *.zip
+trigger-function.zip
+oncomplete-function.zip
 
 # code coverage
 coverage
