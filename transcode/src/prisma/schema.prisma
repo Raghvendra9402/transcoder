@@ -1,0 +1,63 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Course {
+  id String @id @default(uuid())
+  title String
+  description String?
+  price Int?
+
+  chapters Chapter[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Chapter {
+  id String @id @default(uuid())
+  title String
+  description String?
+
+  courseId String
+  course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  videos ChapterContent[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum TranscodeStatus {
+  PENDING
+  PROCESSING
+  READY
+  FAILED
+}
+
+model ChapterContent {
+  id String @id @default(uuid())
+  title String
+  chapterId String
+  chapter Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+
+  status TranscodeStatus @default(PENDING)
+  sourceKey String? @unique
+  mediaConvertJobId String?
+  hlsManifestUrl String?
+  thumbnailUrls String[]
+  errorMessage String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

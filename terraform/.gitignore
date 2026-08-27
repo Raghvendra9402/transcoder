@@ -1,0 +1,4 @@
+.agents
+.terraform
+.terraform.*
+terraform.*
