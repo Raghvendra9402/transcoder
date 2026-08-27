@@ -18,7 +18,7 @@ resource "aws_lambda_function" "trigger_function" {
       MEDIACONVERT_ENDPOINT = "https://mediaconvert.ap-south-1.amazonaws.com"
       MEDIACONVERT_ROLE_ARN = aws_iam_role.mediaconvert_role.arn
       OUTPUT_BUCKET = aws_s3_bucket.output_bucket.bucket
-      DATABASE_URL="postgres://b36709065b93e7e2e3c0856980da0998e1d843932c8b00d9dd45d646a7a478e5:sk_nnA5EKaOPWQpZDo3yR--v@db.prisma.io:5432/postgres?sslmode=require"
+      DATABASE_URL=var.DATABASE_URL
     }
   }
 }
@@ -40,7 +40,7 @@ resource "aws_lambda_function" "oncomplete_function" {
 
   environment {
     variables = {
-      DATABASE_URL="postgres://b36709065b93e7e2e3c0856980da0998e1d843932c8b00d9dd45d646a7a478e5:sk_nnA5EKaOPWQpZDo3yR--v@db.prisma.io:5432/postgres?sslmode=require"
+      DATABASE_URL=var.DATABASE_URL
     }
   }
 }
